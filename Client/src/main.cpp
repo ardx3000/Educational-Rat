@@ -1,6 +1,8 @@
 #include <iostream>
 
 int main() {
-    std::cout << "Is working " << std::endl;
+    std::cout << "Client working " << std::endl;
+    std::cin.get();
     return 0;
 }
+
