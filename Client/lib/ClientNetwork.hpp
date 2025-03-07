@@ -8,7 +8,7 @@
 
 class ClientNetwork {
     public:
-        ClientNetwork(const std::string& serverIp, int serverPort);
+        ClientNetwork(const std::string& serverIP, int serverPort);
         ~ClientNetwork();
 
         bool connectToServer();

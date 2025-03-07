@@ -14,7 +14,7 @@ class ServerNetwork {
         bool startServer();
         SOCKET acceptClient();
         bool sendData(SOCKET clientSocket, const std::string& data);
-        std::string& receiveData(SOCKET clientSocket);
+        std::string receiveData(SOCKET clientSocket);
 
     private:
         int serverPort;
