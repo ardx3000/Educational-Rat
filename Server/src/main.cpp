@@ -22,6 +22,8 @@ int main() {
     server.sendData(clientSocket, "From server ! ");
 
     closesocket(clientSocket);
-    
+
+    std::cin.get();
+
     return 0;
 }

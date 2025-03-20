@@ -42,3 +42,12 @@ build/
 
 # Ignore local editor setings
 *.vscode
+
+.ninja/
+.ninja_deps
+.ninja_log
+build.ninja
+
+
+/ninja_deps
+/ninja_logs
