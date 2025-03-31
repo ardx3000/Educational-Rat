@@ -2,6 +2,8 @@
 #define FILEHANDLER_HPP
 
 #include <string>
+#include <fstream>
+#include <iostream>
 
 class FileHandler {
     public:

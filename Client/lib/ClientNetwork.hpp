@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <WinSock2.h>
+#include <fstream>
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -13,6 +14,7 @@ class ClientNetwork {
 
         bool connectToServer();
         bool sendData(const std::string& data);
+        bool sendFile(const std::string& filePath);
         std::string receiveData();
 
     private:

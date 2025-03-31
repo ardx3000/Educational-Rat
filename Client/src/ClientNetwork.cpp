@@ -43,10 +43,29 @@ bool ClientNetwork::sendData(const std::string& data) {
         //TODO AES encryption before sending the data! 
         int result = send(clientSocket, data.c_str(), data.size(), 0);
         if (result == SOCKET_ERROR) {
-            std::cerr << "Send failed ! " << WSAGetLastError() << std::endl;
+            std::cerr << "From clinetSend failed ! " << WSAGetLastError() << std::endl;
             return false;
         }
         return true;
+}
+
+bool ClientNetwork::sendFile(const std::string& filePath) {
+    std::ifstream file(filePath, std::ios::binary);
+    if (!file) {
+        std::cerr << "Failed to open the file: " << filePath << "!\n";
+        return false;
+    }
+
+    //Send file
+    char buffer[1024];
+    while (file.read(buffer, sizeof(buffer)) || file.gcount() > 0) {
+        send (clientSocket, buffer, file.gcount(), 0);
+    }
+    
+    //Send EOF
+    send(clientSocket, "EOF", 3, 0);
+    file.close();
+    return true;
 }
 
 std::string ClientNetwork::receiveData() {

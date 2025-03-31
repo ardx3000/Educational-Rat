@@ -79,3 +79,23 @@ std::string ServerNetwork::receiveData(SOCKET clientSocket) {
     }
     return std::string(buffer, result);
 }
+
+bool ServerNetwork::receiveFile(SOCKET clientSocket, const std::string& savePath) {
+    std::ofstream file (savePath, std::ios::binary);
+    if (!file) {
+        std::cerr << "Failed to create file: " << savePath << "!\n";
+        return false;
+    }
+
+    char buffer[1024];
+    int bytesReceived;
+    while ((bytesReceived = recv(clientSocket, buffer, sizeof(buffer), 0)) > 0) {
+        // Check for EOF
+        if (bytesReceived == 3 && std::string(buffer, 3) == "EOF") {
+            break;
+        }
+        file.write(buffer, bytesReceived);
+    } 
+    file.close();
+    return true;
+}

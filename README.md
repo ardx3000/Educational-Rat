@@ -14,6 +14,7 @@ I am creating this project as a way to practice my C++ and also learn more thing
 ## Implementation
 - [x] Socket for client server communication
 - [x] Keylogger
+- [x] File transfer betwen client and server
 
 ## Legal Disclaimer
 

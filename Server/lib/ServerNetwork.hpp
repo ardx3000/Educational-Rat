@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <WinSock2.h>
+#include <fstream>
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -15,6 +16,7 @@ class ServerNetwork {
         SOCKET acceptClient();
         bool sendData(SOCKET clientSocket, const std::string& data);
         std::string receiveData(SOCKET clientSocket);
+        bool receiveFile(SOCKET clientSocket, const std::string& savePath);
 
     private:
         int serverPort;

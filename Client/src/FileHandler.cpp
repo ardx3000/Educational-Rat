@@ -1,11 +1,13 @@
 #include "../lib/FileHandler.hpp"
-#include <fstream>
-#include <iostream>
+
+
+//TODO Update the class with a method that deletes the file.
 
 FileHandler::FileHandler(const std::string& filename) : filename(filename) {
     fileExistance();
 }
 
+//TODO Update the method to create a secrete file.
 void FileHandler::writeFile(const std::string& data) {
     std::ofstream file(filename, std::ios::app);
     if (file.is_open()) {
