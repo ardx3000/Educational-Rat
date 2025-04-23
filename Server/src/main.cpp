@@ -1,4 +1,4 @@
-#include"../lib/ServerNetwork.hpp"
+#include"../lib/Networking/ServerNetwork.hpp"
 #include <iostream>
 
 int main() {

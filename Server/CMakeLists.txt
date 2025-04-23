@@ -3,7 +3,10 @@ project(Server)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # Add source files
-add_executable(server src/main.cpp src/ServerNetwork.cpp)
+add_executable(server 
+    src/main.cpp 
+    src/Networking/ServerNetwork.cpp
+    )
 
 # Include header files
 target_include_directories(server PRIVATE lib)

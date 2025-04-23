@@ -1,4 +1,4 @@
-#include "..\lib\ServerNetwork.hpp"
+#include "../lib/Networking/ServerNetwork.hpp"
 
 ServerNetwork::ServerNetwork(int port) : serverPort(port), serverSocket(INVALID_SOCKET) {
 
